@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <div id="data-container"></div>
+        <div id="newdata"></div>
+    </div>
+</body>
+<script>
+    fetch('https://api.agify.io?name=meelad').then(
+    (response)=>{
+        if(!response.ok){
+            throw new Error("network response was bad")
+        }
+        return response.json()
+    }
+).then((data)=>{
+    const dataContainer = document.getElementById("data-container")
+    dataContainer.innerHTML = `<h1>${JSON.stringify(data,null, 2)}</h1>`
+}).catch((error)=>{
+    console.log(error+" ERROR!!!")
+})
+
+fetch('https://datausa.io/api/data?drilldowns=Nation&measures=Population').then(
+    (response)=>{
+        if(!response.ok){
+            throw new Error("ERROR, fetch did not work, could not find data")
+        }
+        return response.json()
+    }
+).then((data)=>{
+    const newData = document.getElementById('newdata')
+    newData.innerHTML = `<h2>${JSON.stringify(data,null, 2)}</h2>`
+}
+
+).catch((err)=>{
+    console.log(err + " unexpected error")
+})
+
+</script>
+</html>
